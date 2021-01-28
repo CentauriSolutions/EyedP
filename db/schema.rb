@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "api_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "api_keys", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.text "key", null: false
     t.text "name"
     t.text "description"
@@ -47,14 +47,14 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "custom_group_data_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "custom_group_data_types", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.text "name"
     t.text "custom_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "custom_groupdata", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "custom_groupdata", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "group_id", null: false
     t.uuid "custom_group_data_type_id", null: false
     t.text "value_raw"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["group_id"], name: "index_custom_groupdata_on_group_id"
   end
 
-  create_table "custom_userdata", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "custom_userdata", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.uuid "custom_userdata_type_id", null: false
     t.text "value_raw"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["user_id"], name: "index_custom_userdata_on_user_id"
   end
 
-  create_table "custom_userdata_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "custom_userdata_types", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.text "name"
     t.text "custom_type"
     t.boolean "visible", default: true
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "group_permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "group_permissions", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "group_id"
     t.uuid "permission_id"
     t.datetime "created_at", null: false
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["permission_id"], name: "index_group_permissions_on_permission_id"
   end
 
-  create_table "groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "groups", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "parent_id"
     t.text "name"
     t.datetime "created_at", null: false
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["parent_id"], name: "index_groups_on_parent_id"
   end
 
-  create_table "logins", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "logins", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.string "service_provider_type"
     t.uuid "service_provider_id"
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
   end
 
-  create_table "oauth_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "oauth_applications", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "uid", null: false
     t.string "secret", null: false
@@ -196,14 +196,14 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.string "nonce", null: false
   end
 
-  create_table "permissions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "permissions", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.text "name"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "saml_service_providers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "saml_service_providers", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.text "issuer_or_entity_id", null: false
     t.text "metadata_url", null: false
     t.text "fingerprint"
@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["issuer_or_entity_id"], name: "index_saml_service_providers_on_issuer_or_entity_id", unique: true
   end
 
-  create_table "settings", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "settings", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "var", null: false
     t.text "value"
     t.datetime "created_at", null: false
@@ -223,7 +223,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["var"], name: "index_settings_on_var", unique: true
   end
 
-  create_table "user_groups", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "user_groups", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "group_id"
     t.datetime "created_at", null: false
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.index ["user_id"], name: "index_user_groups_on_user_id"
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
