@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_071108) do
+ActiveRecord::Schema.define(version: 2021_04_20_063624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_071108) do
     t.integer "capabilities_mask", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "custom_data", array: true
   end
 
   create_table "audits", force: :cascade do |t|
