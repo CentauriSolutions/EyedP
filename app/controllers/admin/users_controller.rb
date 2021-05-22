@@ -22,6 +22,20 @@ class Admin::UsersController < AdminController
     super
   end
 
+  def disable_2fa
+    @model = User.find(params[:user_id])
+    respond_to do |format|
+      if @model.disable_two_factor!
+        format.html { redirect_to [:edit, :admin, @model], notice: 'Two factor was disabled successfully' }
+        format.json { render :show, status: :ok, location: [:admin, @model] }
+      else
+        format.html { redirect_to [:admin, @model, :edit], notice: "There was a problem disabling the user's two factor" }
+
+        format.json { render json: @model.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def reset_password
     @model = User.find(params[:user_id])
     respond_to do |format|
