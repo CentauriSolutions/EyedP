@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'admin' => 'admin/dashboard#index', as: :admin_dashboard
   namespace :admin do
     # get 'dashboard/index'
+    resources :api_keys
     resources :groups do
       get :email, to: 'groups#email'
     end
@@ -32,6 +33,20 @@ Rails.application.routes.draw do
     get 'settings/branding', to: 'settings#branding'
     get 'settings/templates', to: 'settings#templates'
     # end
+  end
+
+  namespace :api do
+    resources :groups do
+      get 'users', to: 'groups#list_users'
+      resources :users, only: [] do
+        post '/', to: 'groups#add_user'
+        delete '/', to: 'groups#remove_user'
+      end
+    end
+    resources :users do
+      get 'user_data', to: 'users#user_data'
+      match 'user_data', to: 'users#update_user_data', via: %i[put post]
+    end
   end
 
   devise_for :users, controllers: {
